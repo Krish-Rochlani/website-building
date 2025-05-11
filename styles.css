@@ -1,0 +1,29 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.carousel-inner img {
+  height: 600px;
+  object-fit: cover;
+}
+
+.achievements {
+  background: #f0f0f0;
+  padding: 60px 0;
+}
+
+.footer {
+  background-color: #343a40;
+  color: white;
+  padding: 40px 0;
+}
+
+.footer a {
+  color: #f8f9fa;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer a:hover {
+  color: #adb5bd;
+}

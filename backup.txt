@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<style>
+  body {
+    scroll-behavior: smooth;
+  }
+
+  .jump-button {
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: rgba(0, 255, 255, 0.1);
+    border: 2px solid cyan;
+    border-radius: 10px;
+    padding: 1rem;
+  }
+
+  .jump-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0, 255, 255, 0.5);
+    background-color: rgba(0, 255, 255, 0.2);
+  }
+
+  .floating-buttons {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+  }
+
+  #carousel img {
+    height: 600px;
+    object-fit: cover;
+  }
+
+  .carousel-inner img,
+  .carousel-inner video {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+  }
+
+  .highlight-container {
+    background-color: #e0ffff;
+    padding: 3rem 1rem;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+  }
+
+  /* 👇 Card layout styles */
+  .card-slider-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-slider-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .card-slider {
+    flex: 0 0 50%; /* 2 cards at a time */
+    padding: 1rem;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+  }
+
+  .card-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    opacity: 0.8;
+  }
+
+  .card-nav-btn:hover {
+    opacity: 1;
+  }
+
+  .prev-btn {
+    left: 0;
+  }
+
+  .next-btn {
+    right: 0;
+  }
+
+.card-container {
+  perspective: 1000px;
+}
+
+.custom-card {
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  height: 100%;
+  background-color: #fff;
+}
+
+.custom-card img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-description {
+  padding: 1rem;
+  display: none;
+  transition: opacity 0.3s ease;
+}
+
+.custom-card:hover .card-description {
+  display: block;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.custom-card {
+  width: 700px;
+  height: auto;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 0 auto;
+}
+
+.custom-card img {
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.card-description {
+  padding: 1rem;
+  display: none;
+}
+
+.custom-card:hover .card-description {
+  display: block;
+}
+
+
+</style>
+
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="signature.png" alt="My Signature" height="40" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#carousel">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#achievements">Highlights</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Floating Buttons -->
+  <div class="floating-buttons text-center" id="floatingNav">
+    <a href="#sports" class="btn btn-outline-info m-1">Sports</a>
+    <a href="#academics" class="btn btn-outline-info m-1">Academics</a>
+    <a href="#extracurriculars" class="btn btn-outline-info m-1">Extra Curriculars</a>
+  </div>
+
+  <!-- Main Carousel -->
+  <div id="carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="IMG_9575.jpg" class="d-block w-100" alt="IMG_9575" />
+      </div>
+      <div class="carousel-item">
+        <img src="IMG_4582.jpg" class="d-block w-100" alt="IMG_4582" />
+      </div>
+      <div class="carousel-item">
+        <img src="IMG_3527.jpg" class="d-block w-100" alt="IMG_3527" />
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Highlights -->
+  <section id="achievements" class="text-center py-5">
+    <div class="container">
+      <h2 class="mb-5">Highlights</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <a href="#sports" class="btn jump-button w-100 mb-3">
+            <i class="fas fa-futbol fa-2x mb-2"></i>
+            <h5>Sports</h5>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="#academics" class="btn jump-button w-100 mb-3">
+            <i class="fas fa-graduation-cap fa-2x mb-2"></i>
+            <h5>Academics</h5>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="#extracurriculars" class="btn jump-button w-100 mb-3">
+            <i class="fas fa-theater-masks fa-2x mb-2"></i>
+            <h5>Extra Curriculars</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Card Carousel Styles -->
+<style>
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+</style>
+
+<!-- Sports Section -->
+<section id="sports" class="highlight-container">
+  <div class="container">
+    <h2 class="text-center mb-4">Sports</h2>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="s1.jpg" alt="Football Tournament" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Football Tournament</h5>
+          <div class="card-description">
+            <p>Played in inter-school football finals with great teamwork and dedication.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="s2.jpg" alt="Basketball Match" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Basketball Match</h5>
+          <div class="card-description">
+            <p>Participated in district basketball tournament, scoring 15+ points per game.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="s3.jpg" alt="Track Event" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Track Event</h5>
+          <div class="card-description">
+            <p>Secured 1st place in 100m sprint at school annual athletics meet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Academics Section -->
+<section id="academics" class="highlight-container">
+  <div class="container">
+    <h2 class="text-center mb-4">Academics</h2>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="a1.jpg" alt="Math Olympiad" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Math Olympiad</h5>
+          <div class="card-description">
+            <p>Won gold medal in regional level Math Olympiad with top scores.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="a2.jpg" alt="Science Fair" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Science Fair</h5>
+          <div class="card-description">
+            <p>Presented a working model of renewable energy solutions and won 2nd prize.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="a3.jpg" alt="Top Grades" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Top Grades</h5>
+          <div class="card-description">
+            <p>Consistently ranked top 3 in class across all major subjects.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Extra Curriculars Section -->
+<section id="extracurriculars" class="highlight-container">
+  <div class="container">
+    <h2 class="text-center mb-4">Extra Curriculars</h2>
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="e1.jpg" alt="Drama Club" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Drama Club</h5>
+          <div class="card-description">
+            <p>Lead actor in annual play performance in front of 300+ attendees.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="e2.jpg" alt="Art Competition" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Art Competition</h5>
+          <div class="card-description">
+            <p>Secured 1st prize in state-level painting competition with landscape theme.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 mb-4 card-container">
+        <div class="custom-card">
+          <img src="e3.jpg" alt="Music Recital" class="card-img-top">
+          <h5 class="card-title text-center mt-2">Music Recital</h5>
+          <div class="card-description">
+            <p>Performed solo guitar recital at cultural fest and received excellent feedback.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Contact Me</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form action="https://formspree.io/f/xqaqlawk" method="POST">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" name="name" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" name="email" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Message</label>
+              <textarea class="form-control" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center bg-dark text-white py-3">
+    <p>Contact: your.email@example.com</p>
+    <div>
+      <a href="https://twitter.com" target="_blank" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com" target="_blank" class="text-white mx-2"><i class="fab fa-github"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.addEventListener("scroll", function () {
+      const triggerPoint = document.getElementById("achievements").offsetTop + 200;
+      const floatingNav = document.getElementById("floatingNav");
+      if (window.scrollY > triggerPoint) {
+        floatingNav.style.display = "flex";
+      } else {
+        floatingNav.style.display = "none";
+      }
+    });
+  </script>
+<script>
+  const cardStates = {};
+
+  function slideCards(wrapperId, direction) {
+    const wrapper = document.getElementById(wrapperId);
+    const cardCount = wrapper.children.length;
+    const cardWidth = wrapper.children[0].offsetWidth;
+    const visibleCards = 2;
+    cardStates[wrapperId] = cardStates[wrapperId] || 0;
+    cardStates[wrapperId] += direction;
+
+    if (cardStates[wrapperId] < 0) cardStates[wrapperId] = 0;
+    if (cardStates[wrapperId] > cardCount - visibleCards) cardStates[wrapperId] = cardCount - visibleCards;
+
+    wrapper.style.transform = `translateX(-${cardStates[wrapperId] * cardWidth}px)`;
+  }
+
+  // Reveal on hover
+  document.querySelectorAll('.card-slider').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.querySelector('.card-img-top').classList.remove('d-none');
+      card.querySelector('.card-text').classList.remove('d-none');
+    });
+    card.addEventListener('mouseleave', () => {
+      card.querySelector('.card-img-top').classList.add('d-none');
+      card.querySelector('.card-text').classList.add('d-none');
+    });
+  });
+</script>
+
+<script>
+  const data = {
+    sports: [
+      { title: "Football", img: "s1.jpg", desc: "Football match winner details." },
+      { title: "Basketball", img: "s2.jpg", desc: "Inter-school tournament experience." },
+      { title: "Cricket", img: "s3.jpg", desc: "Captain of the school cricket team." },
+      { title: "Swimming", img: "s4.jpg", desc: "Won gold in freestyle swimming." },
+      { title: "Badminton", img: "s5.jpg", desc: "District level finalist." },
+      { title: "Tennis", img: "s6.jpg", desc: "Participated in inter-state matches." }
+    ],
+    academics: [
+      { title: "Math Olympiad", img: "a1.jpg", desc: "Gold medalist in regional level." },
+      { title: "Science Fair", img: "a2.jpg", desc: "Built a working robotic arm." },
+      { title: "Quiz Bee", img: "a3.jpg", desc: "Represented school at nationals." },
+      { title: "Essay Contest", img: "a4.jpg", desc: "Won 2nd place in city-wide contest." },
+      { title: "Coding Challenge", img: "a5.jpg", desc: "Placed top 5 among 100+ coders." }
+    ],
+    extracurriculars: [
+      { title: "Drama Club", img: "e1.jpg", desc: "Lead role in annual play." },
+      { title: "Music Band", img: "e2.jpg", desc: "Played guitar at school fest." },
+      { title: "Art Competition", img: "e3.jpg", desc: "1st prize in state painting." },
+      { title: "Volunteering", img: "e4.jpg", desc: "Organized charity events." },
+      { title: "Photography", img: "e5.jpg", desc: "Exhibited work in local gallery." },
+      { title: "Poetry Slam", img: "e6.jpg", desc: "Performed original poems." },
+      { title: "Debate", img: "e7.jpg", desc: "Best speaker award." },
+      { title: "Robotics Club", img: "e8.jpg", desc: "Built autonomous bots." },
+      { title: "Chess", img: "e9.jpg", desc: "School team captain." },
+      { title: "Cooking Club", img: "e10.jpg", desc: "Hosted culinary workshops." }
+    ]
+  };
+
+  const currentIndex = { sports: 0, academics: 0, extracurriculars: 0 };
+
+  function renderCards(section) {
+    const container = document.getElementById(section + "Cards");
+    container.innerHTML = "";
+    const items = data[section];
+    const start = currentIndex[section];
+    const end = Math.min(start + 2, items.length);
+
+    for (let i = start; i < end; i++) {
+      const card = `
+        <div class="col-md-6 mb-4">
+          <div class="custom-card">
+            <img src="${items[i].img}" alt="${items[i].title}" />
+            <div class="card-title">${items[i].title}</div>
+            <div class="card-description">${items[i].desc}</div>
+          </div>
+        </div>
+      `;
+      container.innerHTML += card;
+    }
+  }
+
+  function changeCards(section, step) {
+    const max = data[section].length;
+    currentIndex[section] = Math.min(Math.max(currentIndex[section] + step * 2, 0), max - 2);
+    renderCards(section);
+  }
+
+  // Initial render
+  ['sports', 'academics', 'extracurriculars'].forEach(renderCards);
+</script>
+
+
+
+</body>
+</html>

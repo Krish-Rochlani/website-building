@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>My Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+<style>
+<style>
+  .custom-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+  }
+
+  .custom-card:hover {
+    transform: scale(1.03);
+  }
+
+  .custom-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .custom-card-body {
+    padding: 15px;
+    position: relative;
+  }
+
+  .custom-card-body h5 {
+    margin: 0 0 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  .custom-card-body p {
+    display: none;
+    margin: 0;
+    font-size: 0.95rem;
+    color: #555;
+  }
+
+  .custom-card:hover .custom-card-body p {
+    display: block;
+  }
+
+  .card-section {
+    padding: 40px 0;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+
+  .btn-nav {
+    margin: 10px 5px;
+  }
+</style>
+
+
+</style>
+
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="signature.png" alt="My Signature" height="40" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#carousel">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#achievements">Highlights</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Floating Buttons -->
+  <div class="floating-buttons text-center" id="floatingNav">
+    <a href="#sports" class="btn btn-outline-info m-1">Sports</a>
+    <a href="#academics" class="btn btn-outline-info m-1">Academics</a>
+    <a href="#extracurriculars" class="btn btn-outline-info m-1">Extra Curriculars</a>
+  </div>
+
+  <!-- Main Carousel -->
+  <div id="carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#carousel" data-bs-slide-to="2"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="IMG_9575.jpg" class="d-block w-100" alt="IMG_9575" />
+      </div>
+      <div class="carousel-item">
+        <img src="IMG_4582.jpg" class="d-block w-100" alt="IMG_4582" />
+      </div>
+      <div class="carousel-item">
+        <img src="IMG_3527.jpg" class="d-block w-100" alt="IMG_3527" />
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Highlights -->
+  <section id="achievements" class="text-center py-5">
+    <div class="container">
+      <h2 class="mb-5">Highlights</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <a href="#sports" class="btn jump-button w-100 mb-3">
+            <i class="fas fa-futbol fa-2x mb-2"></i>
+            <h5>Sports</h5>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="#academics" class="btn jump-button w-100 mb-3">
+            <i class="fas fa-graduation-cap fa-2x mb-2"></i>
+            <h5>Academics</h5>
+          </a>
+        </div>
+        <div class="col-md-4">
+          <a href="#extracurriculars" class="btn jump-button w-100 mb-3">
+            <i class="fas fa-theater-masks fa-2x mb-2"></i>
+            <h5>Extra Curriculars</h5>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Card Carousel Styles -->
+<style>
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+</style>
+
+<!-- Shared Card Section Template -->
+<section id="sports" class="highlight-container">
+  <div class="container">
+    <h2 class="text-center mb-4">Sports</h2>
+    <div class="row justify-content-center align-items-stretch" id="sports-cards"></div>
+    <div class="text-center mt-3">
+      <button class="btn btn-dark me-2" onclick="changeCards('sports', -1)">Previous</button>
+      <button class="btn btn-dark" onclick="changeCards('sports', 1)">Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="academics" class="highlight-container">
+  <div class="container">
+    <h2 class="text-center mb-4">Academics</h2>
+    <div class="row justify-content-center align-items-stretch" id="academics-cards"></div>
+    <div class="text-center mt-3">
+      <button class="btn btn-dark me-2" onclick="changeCards('academics', -1)">Previous</button>
+      <button class="btn btn-dark" onclick="changeCards('academics', 1)">Next</button>
+    </div>
+  </div>
+</section>
+
+<section id="extracurriculars" class="highlight-container">
+  <div class="container">
+    <h2 class="text-center mb-4">Extra Curriculars</h2>
+    <div class="row justify-content-center align-items-stretch" id="extracurriculars-cards"></div>
+    <div class="text-center mt-3">
+      <button class="btn btn-dark me-2" onclick="changeCards('extracurriculars', -1)">Previous</button>
+      <button class="btn btn-dark" onclick="changeCards('extracurriculars', 1)">Next</button>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-5">Contact Me</h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form action="https://formspree.io/f/xqaqlawk" method="POST">
+            <div class="mb-3">
+              <label class="form-label">Name</label>
+              <input type="text" class="form-control" name="name" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email address</label>
+              <input type="email" class="form-control" name="email" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Message</label>
+              <textarea class="form-control" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer text-center bg-dark text-white py-3">
+    <p>Contact: your.email@example.com</p>
+    <div>
+      <a href="https://twitter.com" target="_blank" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
+      <a href="https://linkedin.com" target="_blank" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com" target="_blank" class="text-white mx-2"><i class="fab fa-github"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    window.addEventListener("scroll", function () {
+      const triggerPoint = document.getElementById("achievements").offsetTop + 200;
+      const floatingNav = document.getElementById("floatingNav");
+      if (window.scrollY > triggerPoint) {
+        floatingNav.style.display = "flex";
+      } else {
+        floatingNav.style.display = "none";
+      }
+    });
+  </script>
+<script>
+  const cardIndices = {
+    sports: 0,
+    academics: 0,
+    extracurriculars: 0
+  };
+
+  const cardData = {
+    sports: [
+      { title: "Football", img: "s1.jpg", desc: "Football match winner details." },
+      { title: "Basketball", img: "s2.jpg", desc: "Inter-school tournament experience." },
+      { title: "Cricket", img: "s3.jpg", desc: "Captain of the school cricket team." },
+      { title: "Swimming", img: "s4.jpg", desc: "Won gold in freestyle swimming." },
+      { title: "Badminton", img: "s5.jpg", desc: "District level finalist." },
+      { title: "Tennis", img: "s6.jpg", desc: "Participated in inter-state matches." }
+    ],
+    academics: [
+      { title: "Math Olympiad", img: "a1.jpg", desc: "Gold medalist in regional level." },
+      { title: "Science Fair", img: "a2.jpg", desc: "Built a working robotic arm." },
+      { title: "Quiz Bee", img: "a3.jpg", desc: "Represented school at nationals." },
+      { title: "Essay Contest", img: "a4.jpg", desc: "Won 2nd place in city-wide contest." },
+      { title: "Hackathon", img: "a5.jpg", desc: "Developed a note-taking web app." }
+    ],
+    extracurriculars: [
+      { title: "Drama Club", img: "e1.jpg", desc: "Lead role in school play." },
+      { title: "Music Band", img: "e2.jpg", desc: "Played guitar at local events." },
+      { title: "Debate", img: "e3.jpg", desc: "Won best speaker award." },
+      { title: "Art Competition", img: "e4.jpg", desc: "Showcased work in exhibition." },
+      { title: "Photography", img: "e5.jpg", desc: "Published photos in school magazine." },
+      { title: "Chess Club", img: "e6.jpg", desc: "Finalist in district tournament." },
+      { title: "Coding Club", img: "e7.jpg", desc: "Built club website." },
+      { title: "Volunteering", img: "e8.jpg", desc: "Organized charity drives." },
+      { title: "Dance", img: "e9.jpg", desc: "Performed at cultural fest." },
+      { title: "Model UN", img: "e10.jpg", desc: "Represented country as delegate." }
+    ]
+  };
+
+  function renderCards(section) {
+    const container = document.getElementById(`${section}-cards`);
+    const cards = cardData[section];
+    const index = cardIndices[section];
+    container.innerHTML = '';
+
+    const visibleCards = cards.slice(index, index + 2);
+    visibleCards.forEach(({ title, img, desc }) => {
+      container.innerHTML += `
+        <div class="col-md-6">
+          <div class="custom-card">
+            <img src="${img}" alt="${title}">
+            <div class="custom-card-body">
+              <div>
+                <h5 class="card-title">${title}</h5>
+                <p>${desc}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function changeCards(section, direction) {
+    const max = cardData[section].length;
+    const newIndex = cardIndices[section] + direction * 2;
+    if (newIndex >= 0 && newIndex < max) {
+      cardIndices[section] = newIndex;
+      renderCards(section);
+    }
+  }
+
+  // Initial render
+  document.addEventListener("DOMContentLoaded", () => {
+    renderCards("sports");
+    renderCards("academics");
+    renderCards("extracurriculars");
+  });
+</script>
+
+
+
+</body>
+</html>
+
+
+
+
