@@ -116,6 +116,61 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+.card-nav-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 255, 255, 0.2);
+  border: none;
+  color: #00ffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,255,255,0.5);
+  transition: all 0.3s ease;
+}
+
+.card-nav-button:hover {
+  background: rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0,255,255,0.7);
+}
+
+.card-container-wrapper {
+  position: relative;
+}
+
+.prev-button {
+  left: -30px;
+}
+
+.next-button {
+  right: -30px;
+}
+
+.card-section {
+  overflow: hidden;
+  position: relative;
+}
+
+
+.card {
+  border: 2px solid #555; /* Medium grey border */
+  border-radius: 10px;     /* Optional: rounded corners */
+}
+
+
+.card {
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+
+
   </style>
 </head>
 <body>
@@ -123,7 +178,10 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">My Portfolio</a>
+     <a class="navbar-brand" href="#">
+  <img src="images/logo.png" alt="Logo" height="40">
+</a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -172,7 +230,7 @@
         <i class="bi bi-journal-text me-2"></i> Academics
       </a>
       <a href="#extracurricular" class="highlight-btn">
-        <i class="bi bi-stars me-2"></i> Extra Curriculars
+        <i class="bi bi-stars me-2"></i> Extra Curricular
       </a>
     </div>
   </div>
@@ -356,6 +414,28 @@ form.addEventListener('submit', function(event) {
         alert('Oops! Something went wrong. Please try again.');
     });
 });
+
+
+const slideIndexes = {
+  sports: 0,
+  academics: 0,
+  extra: 0
+};
+
+function changeSlide(section, direction) {
+  const track = document.getElementById(section + '-track');
+  const cards = track.children;
+  const visibleCards = 3;
+  const maxIndex = cards.length - visibleCards;
+  slideIndexes[section] += direction;
+  if (slideIndexes[section] < 0) slideIndexes[section] = 0;
+  if (slideIndexes[section] > maxIndex) slideIndexes[section] = maxIndex;
+  const offset = slideIndexes[section] * (300); // card width + margin
+  track.style.transform = `translateX(-${offset}px)`;
+}
+
+
+
 </script
 
 
