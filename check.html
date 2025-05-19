@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio Website with Sliding Cards</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .carousel,
+    .carousel-inner,
+    .carousel-item,
+    .carousel-item img {
+      width: 100%;
+      height: 90vh;
+      object-fit: cover;
+    }
+
+    section {
+      width: 100%;
+      padding: 2rem;
+    }
+
+    .highlight-section,
+    .sports-section,
+    .academics-section,
+    .extra-section,
+    footer {
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      transition: transform 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #343a40;
+      color: white;
+    }
+
+    .card-carousel {
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-slider {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .card-slider .card {
+      min-width: calc(100% / 3);
+      box-sizing: border-box;
+    }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="your-logo.png" alt="Logo" height="40" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#highlights">Highlights</a></li>
+          <li class="nav-item"><a class="nav-link" href="#sports">Sports</a></li>
+          <li class="nav-item"><a class="nav-link" href="#academics">Academics</a></li>
+          <li class="nav-item"><a class="nav-link" href="#extra">Extra Curricular</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Carousel -->
+  <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="carousel1.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="carousel2.jpg" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="carousel3.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+
+  <!-- Academics Section -->
+  <section id="academics" class="academics-section">
+    <div class="text-center mb-4">
+      <h2>Academics</h2>
+    </div>
+    <div class="card-carousel">
+      <div class="card-slider" id="academicsSlider">
+        <div class="card"><div class="card-body">Academic 1</div></div>
+        <div class="card"><div class="card-body">Academic 2</div></div>
+        <div class="card"><div class="card-body">Academic 3</div></div>
+        <div class="card"><div class="card-body">Academic 4</div></div>
+        <div class="card"><div class="card-body">Academic 5</div></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="slideCards('academicsSlider', -1)">Previous</button>
+      <button class="btn btn-secondary" onclick="slideCards('academicsSlider', 1)">Next</button>
+    </div>
+  </section>
+
+  <!-- Sports Section -->
+  <section id="sports" class="sports-section">
+    <div class="text-center mb-4">
+      <h2>Sports</h2>
+    </div>
+    <div class="card-carousel">
+      <div class="card-slider" id="sportsSlider">
+        <div class="card"><div class="card-body">Sport 1</div></div>
+        <div class="card"><div class="card-body">Sport 2</div></div>
+        <div class="card"><div class="card-body">Sport 3</div></div>
+        <div class="card"><div class="card-body">Sport 4</div></div>
+        <div class="card"><div class="card-body">Sport 5</div></div>
+        <div class="card"><div class="card-body">Sport 6</div></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="slideCards('sportsSlider', -1)">Previous</button>
+      <button class="btn btn-secondary" onclick="slideCards('sportsSlider', 1)">Next</button>
+    </div>
+  </section>
+
+  <!-- Extra Curricular Section -->
+  <section id="extra" class="extra-section">
+    <div class="text-center mb-4">
+      <h2>Extra Curricular</h2>
+    </div>
+    <div class="card-carousel">
+      <div class="card-slider" id="extraSlider">
+        <div class="card"><div class="card-body">Extra 1</div></div>
+        <div class="card"><div class="card-body">Extra 2</div></div>
+        <div class="card"><div class="card-body">Extra 3</div></div>
+        <div class="card"><div class="card-body">Extra 4</div></div>
+        <div class="card"><div class="card-body">Extra 5</div></div>
+        <div class="card"><div class="card-body">Extra 6</div></div>
+        <div class="card"><div class="card-body">Extra 7</div></div>
+        <div class="card"><div class="card-body">Extra 8</div></div>
+        <div class="card"><div class="card-body">Extra 9</div></div>
+        <div class="card"><div class="card-body">Extra 10</div></div>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-secondary" onclick="slideCards('extraSlider', -1)">Previous</button>
+      <button class="btn btn-secondary" onclick="slideCards('extraSlider', 1)">Next</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Your Name. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const positions = {
+      academicsSlider: 0,
+      sportsSlider: 0,
+      extraSlider: 0
+    };
+
+    function slideCards(id, direction) {
+      const slider = document.getElementById(id);
+      const totalCards = slider.children.length;
+      const maxPosition = totalCards - 3;
+      positions[id] = Math.max(0, Math.min(maxPosition, positions[id] + direction));
+      slider.style.transform = `translateX(-${positions[id] * (100 / 3)}%)`;
+    }
+  </script>
+</body>
+</html>

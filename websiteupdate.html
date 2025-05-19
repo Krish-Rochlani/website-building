@@ -1,445 +1,640 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Portfolio</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portfolio Website with Sliding Cards</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
   <style>
+    /* General */
+    body {
+      background-color: #121212;
+      color: #eee;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      scroll-behavior: smooth;
+    }
+    a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #66ffff;
+      text-decoration: underline;
+    }
+
+    /* Navbar */
+    nav.navbar {
+      background-color: #111;
+    }
+    nav.navbar .nav-link {
+      color: #00ffff;
+      font-weight: 500;
+    }
+    nav.navbar .nav-link:hover {
+      color: #66ffff;
+    }
+    nav.navbar .navbar-brand {
+      color: #00ffff;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+
+    /* Carousel */
+    .carousel-item img {
+      max-height: 800px;
+      object-fit: contain;
+    }
+    .carousel-caption h5 {
+      color: #00ffff;
+      font-weight: bold;
+    }
+    .carousel-caption p {
+      color: #bbf0ff;
+    }
+
+    /* Sections */
+    section {
+      padding: 60px 0;
+    }
+    section h2 {
+      color: #00ffff;
+      margin-bottom: 2rem;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* Card sliding sections */
+    .card-section-wrapper {
+      position: relative;
+      overflow-x: hidden;
+      margin: 0 auto;
+      max-width: 1000px;
+    }
+    .card-track {
+      display: flex;
+      transition: transform 0.3s ease;
+      will-change: transform;
+    }
+    .card {
+      min-width: 300px;
+      margin-right: 40px;
+      background-color: #222;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      color: #eee;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #00ffff;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      border-radius: 10px 10px 0 0;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 15px;
+    }
+    .card-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    .card-text {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    /* Navigation buttons */
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 255, 255, 0.2);
+      border: none;
+      color: #00ffff;
+      font-size: 1.8rem;
+      cursor: pointer;
+      padding: 0.4rem 1rem;
+      border-radius: 50%;
+      box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      z-index: 10;
+    }
+    .slide-btn:hover {
+      background: rgba(0, 255, 255, 0.4);
+      box-shadow: 0 0 20px #00ffff;
+    }
+    .slide-btn.prev {
+      left: -40px;
+    }
+    .slide-btn.next {
+      right: -40px;
+    }
+
+    /* Contact form */
+    #contact {
+      background-color: #111;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+    }
+    #contact h2 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    #contact label {
+      color: #00ffff;
+      font-weight: 600;
+    }
+    #contact input,
+    #contact textarea {
+      background-color: #222;
+      border: 1px solid #00ffff;
+      color: #eee;
+      border-radius: 6px;
+      padding: 10px;
+      width: 100%;
+      margin-bottom: 15px;
+      resize: vertical;
+      font-size: 1rem;
+    }
+    #contact button {
+      background-color: #00ffff;
+      border: none;
+      color: #111;
+      font-weight: 700;
+      padding: 12px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #contact button:hover {
+      background-color: #33ffff;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #111;
+      padding: 20px 0;
+      text-align: center;
+      color: #00ffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    footer a {
+      color: #00ffff;
+      margin: 0 10px;
+      font-size: 1.3rem;
+      vertical-align: middle;
+    }
+    footer a:hover {
+      color: #66ffff;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .slide-btn.prev {
+        left: 0;
+      }
+      .slide-btn.next {
+        right: 0;
+      }
+      .card-section-wrapper {
+        max-width: 100%;
+        padding: 0 10px;
+      }
+      .card {
+        min-width: 250px;
+      }
+    }
+
+
+
+#carouselExampleIndicators {
+    height: 80vh;
+  }
+  #carouselExampleIndicators .carousel-item {
+    height: 80vh;
+  }
+  #carouselExampleIndicators .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+/* Section-specific background colors */
+#highlights .sports-section {
+  background-color: #1a1a1a;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
+#highlights .academics-section {
+  background-color: #1f1f1f;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
+#highlights .extracurricular-section {
+  background-color: #262626;
+  padding: 40px 20px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
 
 .highlight-btn {
-  background: rgba(0, 255, 255, 0.1);
+  background-color: transparent;
   border: 2px solid cyan;
-  color: #007bff;
-  padding: 14px 28px;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  box-shadow: 0 6px 10px rgba(0, 255, 255, 0.2);
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
+  color: cyan;
+  margin: 0 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 30px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .highlight-btn:hover {
-  background: cyan;
-  color: white;
-  transform: translateY(-3px);
-  box-shadow: 0 10px 15px rgba(0, 255, 255, 0.4);
+  background-color: cyan;
+  color: black;
+}
+:root {
+  --navbar-height: 56px; /* Approximate navbar height */
 }
 
-
-  .card-hover {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .card-hover:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-
-
-
-    body {
-      scroll-behavior: smooth;
-    }
-
-    .carousel-item img {
-      height: 75vh;
-      object-fit: cover;
-      width: 100%;
-    }
-
-    .highlight-btn {
-      background: rgba(0, 255, 255, 0.2);
-      color: #0dcaf0;
-      border: 2px solid #0dcaf0;
-      padding: 10px 20px;
-      margin: 10px;
-      border-radius: 8px;
-      box-shadow: 2px 2px 5px rgba(0, 255, 255, 0.5);
-      transition: all 0.3s ease;
-      font-weight: 500;
-    }
-
-    .highlight-btn:hover {
-      transform: translateY(-3px);
-      background-color: rgba(0, 255, 255, 0.4);
-      color: #ffffff;
-    }
-
-    .section-container {
-      padding: 40px 0;
-      background-color: #f8f9fa;
-    }
-
-    .card img {
-      height: 250px;
-      object-fit: cover;
-    }
-
-/* Contact Form */
-.contact-form {
-    background-color: #f8f9fa;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: auto;
+.sticky-wrapper {
+  position: sticky;
+  top: var(--navbar-height);
+  z-index: 1050;
+  background-color: #111; /* Match your dark theme */
+  padding: 10px 0;
+  border-bottom: 1px solid #00ffff33; /* subtle cyan border */
 }
 
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    margin-bottom: 20px;
-    padding: 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 1em;
+.sticky-wrapper.is-sticky {
+  box-shadow: 0 2px 8px rgba(0, 255, 255, 0.3);
 }
-
-.contact-form button {
-    background-color: cyan;
-    color: white;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 5px;
-  
-     cursor: pointer;
-}
-
-.contact-form button:hover {
-    background-color: #00b8b8;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-nav-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 255, 255, 0.2);
-  border: none;
-  color: #00ffff;
-  font-size: 1.5rem;
-  cursor: pointer;
-  z-index: 1;
-  padding: 0.5rem 1rem;
-  border-radius: 50%;
-  box-shadow: 0 0 10px rgba(0,255,255,0.5);
-  transition: all 0.3s ease;
-}
-
-.card-nav-button:hover {
-  background: rgba(0, 255, 255, 0.4);
-  box-shadow: 0 0 20px rgba(0,255,255,0.7);
-}
-
-.card-container-wrapper {
-  position: relative;
-}
-
-.prev-button {
-  left: -30px;
-}
-
-.next-button {
-  right: -30px;
-}
-
-.card-section {
-  overflow: hidden;
-  position: relative;
-}
-
-
-.card {
-  border: 2px solid #555; /* Medium grey border */
-  border-radius: 10px;     /* Optional: rounded corners */
-}
-
-
-.card {
-  transition: box-shadow 0.3s ease;
-}
-
-.card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-}
-
 
 
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-     <a class="navbar-brand" href="#">
-  <img src="images/logo.png" alt="Logo" height="40">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="#">
+  <img src="images/logo.png" alt="My Logo" height="40" class="d-inline-block align-text-top" />
 </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon" style="color:#00ffff;">
+        <i class="bi bi-list" style="font-size: 1.5rem; color:#00ffff;"></i>
+      </span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav fs-5">
+        <li class="nav-item">
+          <a class="nav-link" href="#carouselExampleIndicators">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#highlights">Highlights</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="carouselExampleIndicators" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="images/c1.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="images/c2.jpg" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="images/c3.jpg" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+<!-- Highlights Section -->
+<section id="highlights">
+  <div class="container-fluid text-center py-4">
+    <h2 class="mb-4">Highlights</h2>
+    <div class="btn-group" role="group" aria-label="Highlights Navigation">
+      <button class="btn highlight-btn" onclick="scrollToSection('sports-section')">
+        <i class="bi bi-trophy"></i> Sports
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#sports">Sports</a></li>
-          <li class="nav-item"><a class="nav-link" href="#academics">Academics</a></li>
-          <li class="nav-item"><a class="nav-link" href="#extra">Extra Curriculars</a></li>
-          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-        </ul>
-      </div>
+      <button class="btn highlight-btn" onclick="scrollToSection('academics-section')">
+        <i class="bi bi-journal-bookmark"></i> Academics
+      </button>
+      <button class="btn highlight-btn" onclick="scrollToSection('extracurriculars-section')">
+        <i class="bi bi-stars"></i> Extracurriculars
+      </button>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- Carousel -->
-  <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"></button>
-      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"></button>
-      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"></button>
-      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="3"></button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active"><img src="images/k1.jpg" class="d-block w-100" alt="..."></div>
-      <div class="carousel-item"><img src="images/k2.jpg" class="d-block w-100" alt="..."></div>
-      <div class="carousel-item"><img src="images/k3.jpg" class="d-block w-100" alt="..."></div>
-      <div class="carousel-item"><img src="images/k4.jpg" class="d-block w-100" alt="..."></div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
+
+   <div class="sports-section" id="sports-section">
+
+  <h3 class="mb-3">Sports</h3>
+  <div class="card-section-wrapper">
+    <button class="slide-btn prev" aria-label="Previous sports" onclick="slideCards('sports', -1)">
+      <i class="bi bi-chevron-left"></i>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
+    <div class="card-track" id="sports-track">
+      <div class="card">
+            <img src="images/s1.jpg" alt="Football" />
+            <div class="card-body">
+              <h5 class="card-title">Football</h5>
+              <p class="card-text">Team football championship 2023.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/s2.jpg" alt="Basketball" />
+            <div class="card-body">
+              <h5 class="card-title">Basketball</h5>
+              <p class="card-text">Inter-school basketball tournament.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/s3.jpg" alt="Tennis" />
+            <div class="card-body">
+              <h5 class="card-title">Tennis</h5>
+              <p class="card-text">Regional tennis finals.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/s4.jpg" alt="Swimming" />
+            <div class="card-body">
+              <h5 class="card-title">Swimming</h5>
+              <p class="card-text">Swimming championship medals.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/s5.jpg" alt="Athletics" />
+            <div class="card-body">
+              <h5 class="card-title">Athletics</h5>
+              <p class="card-text">100m dash and relay events.</p>
+            </div>
+          </div>
+
+    </div>
+    <button class="slide-btn next" aria-label="Next sports" onclick="slideCards('sports', 1)">
+      <i class="bi bi-chevron-right"></i>
     </button>
   </div>
+</div>
 
-  <!-- Highlight Section -->
-<section id="highlight" class="py-5" style="background-color: #f0faff;">
-  <div class="container text-center">
-    <h2 class="mb-4">Explore My Portfolio</h2>
-    <div class="d-flex justify-content-center flex-wrap gap-4">
-      <a href="#sports" class="highlight-btn">
-        <i class="bi bi-trophy-fill me-2"></i> Sports
-      </a>
-      <a href="#academics" class="highlight-btn">
-        <i class="bi bi-journal-text me-2"></i> Academics
-      </a>
-      <a href="#extracurricular" class="highlight-btn">
-        <i class="bi bi-stars me-2"></i> Extra Curricular
-      </a>
+
+    <div class="academics-section" id="academics-section">
+
+  <h3 class="mb-3">Academics</h3>
+  <div class="card-section-wrapper">
+    <button class="slide-btn prev" aria-label="Previous academics" onclick="slideCards('academics', -1)">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <div class="card-track" id="academics-track">
+      <div class="card">
+            <img src="images/a1.jpg" alt="Math Olympiad" />
+            <div class="card-body">
+              <h5 class="card-title">Math Olympiad</h5>
+              <p class="card-text">Won gold medal in regional math olympiad.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/a2.jpg" alt="Science Fair" />
+            <div class="card-body">
+              <h5 class="card-title">Science Fair</h5>
+              <p class="card-text">Innovative project on renewable energy.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/a3.jpg" alt="Debate" />
+            <div class="card-body">
+              <h5 class="card-title">Debate</h5>
+              <p class="card-text">Winner of inter-school debate competition.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/a4.jpg" alt="Coding Contest" />
+            <div class="card-body">
+              <h5 class="card-title">Coding Contest</h5>
+              <p class="card-text">Placed 2nd in national coding contest.</p>
+            </div>
+          </div>
+          <div class="card">
+            <img src="images/a5.jpg" alt="Literature" />
+            <div class="card-body">
+              <h5 class="card-title">Literature</h5>
+              <p class="card-text">Published poems in school magazine.</p>
+            </div>
+          </div>
+
     </div>
+    <button class="slide-btn next" aria-label="Next academics" onclick="slideCards('academics', 1)">
+      <i class="bi bi-chevron-right"></i>
+    </button>
   </div>
-</section>
+</div>
 
 
-<!-- Sports Section -->
-<section id="sports" class="py-5" style="background-color: #f8f9fa;">
-  <div class="container">
-    <h2 class="text-center mb-4">Sports</h2>
-    <div class="row justify-content-center">
-      <!-- Card s1 -->
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/s1.jpg" class="card-img-top" alt="Sports 1">
-          <div class="card-body">
-            <h5 class="card-title">Title 1</h5>
-            <p class="card-text">Short description for Sports card 1.</p>
-          </div>
+<div class="extracurricular-section" id="extracurriculars-section">
+
+  <h3 class="mb-3">Extra Curricular</h3>
+  <div class="card-section-wrapper">
+    <button class="slide-btn prev" aria-label="Previous extra curricular" onclick="slideCards('extracurricular', -1)">
+      <i class="bi bi-chevron-left"></i>
+    </button>
+    <div class="card-track" id="extracurricular-track">
+      <div class="card">
+        <img src="images/e1.jpg" alt="Music Band" />
+        <div class="card-body">
+          <h5 class="card-title">Music Band</h5>
+          <p class="card-text">Lead guitarist in school band.</p>
         </div>
       </div>
-      <!-- Card s2 -->
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/s2.jpg" class="card-img-top" alt="Sports 2">
-          <div class="card-body">
-            <h5 class="card-title">Title 2</h5>
-            <p class="card-text">Short description for Sports card 2.</p>
-          </div>
+      <div class="card">
+        <img src="images/e2.jpg" alt="Drama Club" />
+        <div class="card-body">
+          <h5 class="card-title">Drama Club</h5>
+          <p class="card-text">Acted in several school plays.</p>
         </div>
       </div>
-      <!-- Card s3 -->
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/s3.jpg" class="card-img-top" alt="Sports 3">
-          <div class="card-body">
-            <h5 class="card-title">Title 3</h5>
-            <p class="card-text">Short description for Sports card 3.</p>
-          </div>
+      <div class="card">
+        <img src="images/e3.jpg" alt="Photography" />
+        <div class="card-body">
+          <h5 class="card-title">Photography</h5>
+          <p class="card-text">Won best photo award at art fest.</p>
         </div>
       </div>
-      <!-- Add more cards as needed following the same pattern -->
+      <div class="card">
+        <img src="images/e4.jpg" alt="Volunteering" />
+        <div class="card-body">
+          <h5 class="card-title">Volunteering</h5>
+          <p class="card-text">Organized community clean-up drives.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/e5.jpg" alt="Chess Club" />
+        <div class="card-body">
+          <h5 class="card-title">Chess Club</h5>
+          <p class="card-text">Captain of the chess team.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/e6.jpg" alt="Cooking" />
+        <div class="card-body">
+          <h5 class="card-title">Cooking</h5>
+          <p class="card-text">Participated in cooking contests.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/e7.jpg" alt="Robotics" />
+        <div class="card-body">
+          <h5 class="card-title">Robotics</h5>
+          <p class="card-text">Built a robot for competition.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/e8.jpg" alt="Art" />
+        <div class="card-body">
+          <h5 class="card-title">Art</h5>
+          <p class="card-text">Painted murals in school corridors.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/e9.jpg" alt="Writing" />
+        <div class="card-body">
+          <h5 class="card-title">Writing</h5>
+          <p class="card-text">Author of school newsletter articles.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="images/e10.jpg" alt="Yoga" />
+        <div class="card-body">
+          <h5 class="card-title">Yoga</h5>
+          <p class="card-text">Yoga instructor for juniors.</p>
+        </div>
+      </div>
+
     </div>
+    <button class="slide-btn next" aria-label="Next extra curricular" onclick="slideCards('extracurricular', 1)">
+      <i class="bi bi-chevron-right"></i>
+    </button>
   </div>
-</section>
-
-<!-- Academics Section -->
-<section id="academics" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="text-center mb-4">Academics</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/a1.jpg" class="card-img-top" alt="Academics 1">
-          <div class="card-body">
-            <h5 class="card-title">Title 1</h5>
-            <p class="card-text">Short description for Academics card 1.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/a2.jpg" class="card-img-top" alt="Academics 2">
-          <div class="card-body">
-            <h5 class="card-title">Title 2</h5>
-            <p class="card-text">Short description for Academics card 2.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/a3.jpg" class="card-img-top" alt="Academics 3">
-          <div class="card-body">
-            <h5 class="card-title">Title 3</h5>
-            <p class="card-text">Short description for Academics card 3.</p>
-          </div>
-        </div>
-      </div>
-      <!-- Add more cards if needed -->
-    </div>
-  </div>
-</section>
-
-<!-- Extra Curricular Section -->
-<section id="extra" class="py-5" style="background-color: #f8f9fa;">
-  <div class="container">
-    <h2 class="text-center mb-4">Extra Curricular</h2>
-    <div class="row justify-content-center">
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/e1.jpg" class="card-img-top" alt="Extra Curricular 1">
-          <div class="card-body">
-            <h5 class="card-title">Title 1</h5>
-            <p class="card-text">Short description for Extra Curricular card 1.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/e2.jpg" class="card-img-top" alt="Extra Curricular 2">
-          <div class="card-body">
-            <h5 class="card-title">Title 2</h5>
-            <p class="card-text">Short description for Extra Curricular card 2.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card card-hover shadow-sm h-100">
-          <img src="images/e3.jpg" class="card-img-top" alt="Extra Curricular 3">
-          <div class="card-body">
-            <h5 class="card-title">Title 3</h5>
-            <p class="card-text">Short description for Extra Curricular card 3.</p>
-          </div>
-        </div>
-      </div>
-      <!-- More cards can be added similarly -->
-    </div>
-  </div>
-</section>
-
- <!-- Contact Section -->
-<section id="contact" class="container my-5">
-    <h2>Contact Me</h2>
-    <div class="contact-form">
-        <form action="https://formspree.io/f/your-form-id" method="POST">
-            <input type="text" name="name" placeholder="Your Name" required>
-            <input type="email" name="email" placeholder="Your Email" required>
-            <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </div>
-</section>
+</div>
 
 
-<!-- Footer -->
-<footer class="bg-dark text-white text-center py-4">
-  <div class="container">
-    <p class="mb-2">Connect with me:</p>
-    <a href="https://github.com/yourusername" class="text-white me-3" target="_blank" style="font-size: 1.5rem;">
-      <i class="bi bi-github"></i>
-    </a>
-    <a href="https://linkedin.com/in/yourusername" class="text-white me-3" target="_blank" style="font-size: 1.5rem;">
-      <i class="bi bi-linkedin"></i>
-    </a>
-    <a href="https://twitter.com/yourusername" class="text-white me-3" target="_blank" style="font-size: 1.5rem;">
-      <i class="bi bi-twitter-x"></i>
-    </a>
-    <a href="mailto:youremail@example.com" class="text-white" style="font-size: 1.5rem;">
-      <i class="bi bi-envelope-fill"></i>
-    </a>
-    <p class="mt-3 mb-0">&copy; 2025 Your Name. All rights reserved.</p>
-  </div>
-</footer>
+
+<!-- Contact Section --> <section id="contact" class="my-5"> <h2>Contact Me</h2> <form action="https://formspree.io/f/xqaqlawk" method="POST" class="mx-auto" style="max-width: 600px;" > <div class="mb-3"> <label for="name" class="form-label">Name *</label> <input type="text" class="form-control" id="name" name="name" required placeholder="Your full name" /> </div> <div class="mb-3"> <label for="email" class="form-label">Email *</label> <input type="email" class="form-control" id="email" name="_replyto" required placeholder="you@example.com" /> </div> <div class="mb-3"> <label for="message" class="form-label">Message *</label> <textarea class="form-control" id="message" name="message" rows="5" required placeholder="Write your message here..." ></textarea> </div> <button type="submit">Send</button> </form> </section>
+
+ <!-- Footer --> 
+<footer> <p> &copy; 2025 MyPortfolio. All rights reserved. | <a href="https://twitter.com/yourhandle" target="_blank" rel="noopener" ><i class="bi bi-twitter"></i ></a> <a href="https://github.com/yourhandle" target="_blank" rel="noopener" ><i class="bi bi-github"></i ></a> <a href="https://linkedin.com/in/yourhandle" target="_blank" rel="noopener" ><i class="bi bi-linkedin"></i ></a> </p> 
+</footer> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> <script> // Sliding cards logic const trackWidths = { sports: 0, academics: 0, extracurricular: 0, }; const positions = { sports: 0, academics: 0, extracurricular: 0, }; function slideCards(section, direction) { const track = document.getElementById(`${section}-track`); const cardWidth = track.querySelector('.card').offsetWidth + 15; // card width + margin-right const visibleCards = Math.floor(track.parentElement.offsetWidth / cardWidth); const totalCards = track.children.length; const maxPosition = totalCards - visibleCards; positions[section] += direction; if (positions[section] < 0) positions[section] = 0; if (positions[section] > maxPosition) positions[section] = maxPosition; const moveX = -positions[section] * cardWidth; track.style.transform = `translateX(${moveX}px)`; } </script> 
 
 <script>
+  const cardWidth = 315; // card width (300px) + margin-right (15px)
+  const visibleCards = 3; // number of cards visible in the viewport
 
-// This script will show a success message upon form submission.
-const form = document.querySelector('form');
-form.addEventListener('submit', function(event) {
-    event.preventDefault();
-    const formData = new FormData(form);
-    
-    fetch(form.action, {
-        method: form.method,
-        body: formData,
-        headers: {
-            'Accept': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.ok) {
-            alert('Your message has been sent successfully!');
-            form.reset(); // Reset the form fields after submission
-        } else {
-            alert('Oops! Something went wrong. Please try again.');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Oops! Something went wrong. Please try again.');
-    });
+  // Store the current position (index) of each section
+  const positions = {
+    sports: 0,
+    academics: 0,
+    extracurricular: 0
+  };
+
+  function slideCards(section, direction) {
+    const track = document.getElementById(`${section}-track`);
+    const cards = track.children.length;
+    const maxPosition = cards - visibleCards;
+
+    // Update position based on direction (-1 for prev, +1 for next)
+    positions[section] += direction;
+
+    // Clamp position within valid range
+    if (positions[section] < 0) positions[section] = 0;
+    if (positions[section] > maxPosition) positions[section] = maxPosition;
+
+    // Calculate translateX value
+    const translateX = -positions[section] * cardWidth;
+
+    // Apply transform to slide cards
+    track.style.transform = `translateX(${translateX}px)`;
+  }
+
+
+function scrollToSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    section.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+window.addEventListener('scroll', () => {
+  const wrapper = document.getElementById('highlight-buttons-wrapper');
+  const stickyPoint = wrapper.offsetTop - parseInt(getComputedStyle(document.documentElement).getPropertyValue('--navbar-height'));
+  
+  if (window.scrollY >= stickyPoint) {
+    wrapper.classList.add('is-sticky');
+  } else {
+    wrapper.classList.remove('is-sticky');
+  }
 });
 
 
-const slideIndexes = {
-  sports: 0,
-  academics: 0,
-  extra: 0
-};
-
-function changeSlide(section, direction) {
-  const track = document.getElementById(section + '-track');
-  const cards = track.children;
-  const visibleCards = 3;
-  const maxIndex = cards.length - visibleCards;
-  slideIndexes[section] += direction;
-  if (slideIndexes[section] < 0) slideIndexes[section] = 0;
-  if (slideIndexes[section] > maxIndex) slideIndexes[section] = maxIndex;
-  const offset = slideIndexes[section] * (300); // card width + margin
-  track.style.transform = `translateX(-${offset}px)`;
-}
+</script>
 
 
-
-</script
-
-
-  <!-- Bootstrap Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+</body> 
 </html>
